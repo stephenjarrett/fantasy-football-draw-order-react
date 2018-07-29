@@ -12,18 +12,18 @@ class Draftorder extends React.Component {
     
     render() {
         return (
-            <div>
-                <div>
+            <div className="draft-container">
+                <div className="draft-container1">
                     <h2>2018 Fantasy Football Participants:</h2>
-                    <ul>
+                    <div className="participants">
                         {this._drawArrayToScren(this.props.members)}
-                    </ul>
+                    </div>
                 </div>
-                <div>
+                <div className="draft-container2">
                     <h2>Your 2018 Draft Order:</h2>
-                    <ol>
+                    <div className="participants">
                         {this._drawOrderedArrayToScreen(this.props.members)}
-                    </ol>
+                    </div>
                 </div>
             </div>
         );
@@ -32,22 +32,34 @@ class Draftorder extends React.Component {
     
     _drawArrayToScren = (array) => {
         let staticOrder = array;
-        console.log(staticOrder);
+        // console.log(staticOrder);
         return staticOrder.map(name => {
-            return <li key={name} >{name}</li>
+            return (
+                <div className="participant" key={name} onClick={ () => {this.props.doClick(name)}} >
+                    <span className="participant1">
+                        {name}
+                    </span>
+                </div>
+            )
         })
     }
     
     
     _drawOrderedArrayToScreen = (a) => {
-        if (this.state.count === 0) {
-
-            var array = a.slice();
-            let drawOrder = this._shuffle(array);
-            return drawOrder.map(name => {
-                return <li key={name} >{name}</li>
-            })
-        }
+        var array = a.slice();
+        let drawOrder = this._shuffle(array);
+        return drawOrder.map((name,index) => {
+            return (
+            <div className="participant" key={name}>
+                <div className="index">
+                    {index + 1 + '.'}
+                </div> 
+                <div className="participant-name">
+                    {name}
+                </div>    
+            </div>
+            )
+        })
     }
     
     _shuffle = (array) => {
